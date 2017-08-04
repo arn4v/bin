@@ -1,21 +1,6 @@
 #!/bin/bash
 ROOT="${PWD}"
 CMREMOTE=$(cat .git/config  | grep git://github.com | awk '{ print $NF }' | sed s#git://github.com/##g)
-lfr1() {
-var="$1"
-git remote remove los
-git remote add los git://github.com/lineageos/"$var"
-git fetch los
-git merge los/cm-14.1
-git push git@github.com:lineagefork/"$var" HEAD:cm-14.1
-}
-
-rr() {
-    for local in "${LOCALDIR[@]}"; do
-    cd "${ROOT}/${local}"
-    git remote remove los
-    done
-}
 
 LOCALDIR=(
     'build'
@@ -35,30 +20,6 @@ LOCALDIR=(
     'vendor/cm'
     'vendor/cmsdk'
 )
-
-REPOSITORIES=(
-    'android_build'
-    'android_frameworks_base'
-    'android_frameworks_native'
-    'android_packages_apps_Contacts'
-    'android_packages_apps_ContactsCommon'
-    'android_packages_apps_Dialer'
-    'android_packages_apps_ExactCalculator'
-    'android_packages_apps_PackageInstaller'
-    'android_packages_apps_PhoneCommon'
-    'android_packages_apps_Settings'
-    'android_packages_apps_CMParts'
-    'android_system_core'
-    'android_system_netd'
-    'android_system_sepolicy'
-    'android_vendor_cm'
-    'cm_platform_sdk'
-)
-
-#for local in "${LOCALDIR[@]}"; do
-#    cd "${ROOT}/${local}"
-#    rr
-#done
 
 for local in "${LOCALDIR[@]}"; do
     cd "${ROOT}/${local}"

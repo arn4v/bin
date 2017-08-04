@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+DATE=`date +%Y`
+jobcount="-j$(grep -c ^processor /proc/cpuinfo)"
+
+if [ ! -f ${HOME}/.rombuild ]; then
+    ROM="$1"
+    DEVICE="$2"
+    COMMAND="$3"
+else
+    source ${HOME}/.rombuild
+fi
+
+cd ${HOME}/${ROM}
+source build/envsetup.sh
+
+if [[ "$COMMAND" =~ "clean" ]]; then
+make clobber
+make clean
+fi
+
+if [[ "$COMMAND" =~ "dirty" ]]; then
+make installclean
+outdir="./out/target/product/${DEVICE}";
+  rm -rf "$outdir/combinedroot";
+  rm -rf "$outdir/data";
+  rm -rf "$outdir/recovery";
+  rm -rf "$outdir/root";
+  rm -rf "$outdir/system";
+  rm -rf "$outdir/utilities";
+  rm -rf "$outdir/boot"*;
+  rm -rf "$outdir/combined"*;
+  rm -rf "$outdir/kernel";
+  rm -rf "$outdir/ramdisk"*;
+  rm -rf "$outdir/recovery"*;
+  rm -rf "$outdir/system"*;
+  rm -rf "$outdir/obj/ETC/system_build_prop_intermediates";
+  rm -rf "$outdir/ota_temp/RECOVERY/RAMDISK";
+fi
+
+if [[ "$COMMAND" =~ "sync" ]]; then
+time repo sync -f -c --no-clone-bundle -j128 --no-tags
+fi
+
+if [ ! -d ${HOME}/.ccache-${DEVICE}_${ROM} ] ; then
+mkdir ${HOME}/.ccache-${DEVICE}_${ROM}
+fi
+
+export CCACHE_DIR=${HOME}/.ccache-${DEVICE}_${ROM}
+export USE_CCACHE=1
+./prebuilts/misc/linux-x86/ccache/ccache -M 10
+
+if [ "$ROM" = "deso" ]; then
+rm out/target/product/${DEVICE}/*zip
+fi
+
+breakfast ${DEVICE}
+time make $jobcount bacon
+if [ $? -eq 0 ]; then
+    cd $OUT
+    if [ "$ROM" = "deso" ]; then
+        ROM_ZIP="$(ls Desolation*${DATE}*.zip | awk '{print $1}')";
+    elif [ "$ROM" = "*fork*" ]]; then
+        ROM_ZIP="$(ls lineagefork*${DEVICE}*.zip | awk '{print $1}')";
+    elif [ "$ROM" = "*aicp*" ]; then
+        ROM_ZIP="$(ls aicp*${DEVICE}*.zip | awk '{print $1}')";
+    else
+        ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')";
+    fi
+    DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} --share | tail -1 | awk '{print $9}')"
+    echo "[$ROM_ZIP](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
+fi

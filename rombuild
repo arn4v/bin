@@ -49,10 +49,6 @@ export CCACHE_DIR=${HOME}/.ccache-${DEVICE}_${ROM}
 export USE_CCACHE=1
 ./prebuilts/misc/linux-x86/ccache/ccache -M 10
 
-if [ "$ROM" = "deso" ]; then
-rm out/target/product/${DEVICE}/*zip
-fi
-
 breakfast ${DEVICE}
 time make $jobcount bacon
 if [ $? -eq 0 ]; then
@@ -66,6 +62,7 @@ if [ $? -eq 0 ]; then
     else
         ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')";
     fi
+    rm out/target/product/${DEVICE}/*zip
     DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} --share | tail -1 | awk '{print $9}')"
     echo "[$ROM_ZIP](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
 fi

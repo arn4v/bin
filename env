@@ -45,7 +45,7 @@ echo -ne "${cyan}";upinfo;echo ""
 #------------------------------------------////
 
 function dup() {
-drive upload -f $1 -p 0B92EJ_33UG8LRlg3UEx3bUkxRTg --share
+drive upload -f $1 -p 0B2HoiwlM3QDxOGc0SE9jLUYwdTA --share
 }
 
 function build() {

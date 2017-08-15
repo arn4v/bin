@@ -76,5 +76,10 @@ if [ $? -eq 0 ]; then
 #    FILE_ID="$(gdrive list | grep ${ROM} | awk '{print $2}'| tail -1}"
 #    DOWNLOAD_URL="$(drive share -i ${FILE_ID)"
     DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} -p ${FOLDER_ID} --share | tail -1 | awk '{print $9}')"
-    echo "[${ROM_ZIP}](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
+    TRANSFER_URL="$(curl --upload-file ./${ROM_ZIP} https://transfer.sh/${ROM_ZIP}"
+    if [ $ROMBUILD = 1 ]; then
+        echo "[${ROM_ZIP}](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
+    else
+        echo "FILE: ${ROM_ZIP} can be downloaded at ${DOWNLOAD_URL} or ${TRANSFER_URL}"
+    fi
 fi

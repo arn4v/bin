@@ -57,7 +57,7 @@ if [ $? -eq 0 ]; then
         ROM_ZIP="$(ls *fork*${DEVICE}*.zip | awk '{print $1}')"
         FOLDER_ID="$0B2HoiwlM3QDxXzV6OTFfb0szZXc"
     elif [[ "$ROM" = "aicp" ]]; then
-        ROM_ZIP="$(ls aicp*${DEVICE}*.zip | awk '{print $1}')"
+        ROM_ZIP="$(ls aicp_${DEVICE}*UNOFFICIAL*.zip | awk '{print $1}')"
         FOLDER_ID="0B2HoiwlM3QDxVFk4UUd2bG56Ums"
     else
         ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')"

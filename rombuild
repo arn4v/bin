@@ -3,6 +3,10 @@ source ${HOME}/bin/env
 DATE=`date +%Y`
 jobcount="-j$(grep -c ^processor /proc/cpuinfo)"
 
+if [ ! $ROMBUILD = 1 ]; then
+    rm ${HOME}/.rombuild
+fi
+
 if [ ! -f ${HOME}/.rombuild ]; then
     ROM="$1"
     DEVICE="$2"
@@ -55,16 +59,22 @@ breakfast ${DEVICE}
 time make $jobcount bacon
 if [ $? -eq 0 ]; then
     cd $OUT
-    if [ "$ROM" = "deso" ]; then
-        ROM_ZIP="$(ls Desolation*${DATE}*.zip | awk '{print $1}')";
-    elif [ "$ROM" = "*fork*" ]; then
-        ROM_ZIP="$(ls lineagefork*${DEVICE}*.zip | awk '{print $1}')";
-    elif [ "$ROM" = "*aicp*" ]; then
-        ROM_ZIP="$(ls aicp*${DEVICE}*.zip | awk '{print $1}')";
+    if [[ "$ROM" = "deso" ]]; then
+        ROM_ZIP="$(ls Desolation*${DATE}*.zip | awk '{print $1}')"
+        FOLDER_ID="0B2HoiwlM3QDxVEo0LWNuZ0paYWc"
+    elif [[ "$ROM" = "fork" ]]; then
+        ROM_ZIP="$(ls *fork*${DEVICE}*.zip | awk '{print $1}')"
+        FOLDER_ID="$0B2HoiwlM3QDxXzV6OTFfb0szZXc"
+    elif [[ "$ROM" = "aicp" ]]; then
+        ROM_ZIP="$(ls aicp*${DEVICE}*.zip | awk '{print $1}')"
+        FOLDER_ID="0B2HoiwlM3QDxVFk4UUd2bG56Ums"
     else
-        ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')";
+        ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')"
+        FOLDER_ID="0B2HoiwlM3QDxOGc0SE9jLUYwdTA"
     fi
-    rm out/target/product/${DEVICE}/*zip
-    DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} -p 0B2HoiwlM3QDxOGc0SE9jLUYwdTA --share | tail -1 | awk '{print $9}')"
-    echo "[$ROM_ZIP](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
+    rm out/target/product/${DEVICE}/*.zip*
+#    FILE_ID="$(gdrive list | grep ${ROM} | awk '{print $2}'| tail -1}"
+#    DOWNLOAD_URL="$(drive share -i ${FILE_ID)"
+    DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} -p ${FOLDER_ID} --share | tail -1 | awk '{print $9}')"
+    echo "[${ROM_ZIP}](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
 fi

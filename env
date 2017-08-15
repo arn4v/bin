@@ -47,6 +47,9 @@ echo -ne "${cyan}";upinfo;echo ""
 function dup() {
 drive upload -f $1 -p 0B2HoiwlM3QDxOGc0SE9jLUYwdTA --share
 }
+function afh() {
+ncftpput -u ${afhusername} -p ${afhpassword} uploads.androidfilehost.com . $1
+}
 
 function build() {
 if [ $3 == "sync" ];
@@ -92,5 +95,3 @@ alias gresh='git reset --hard HEAD^'
 alias gcamd='git commit --amend'
 alias gchp='git cherry-pick'
 
-# AFH
-alias afh='ncftpput -u $afhusername -p $afhusername uploads.androidfilehost.com . $1'

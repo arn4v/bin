@@ -47,22 +47,22 @@ fi
 #fi
 
 export CCACHE_DIR=${HOME}/.ccache
-export USE_CCACHE=1
-ccache -M 50G
-#./prebuilts/misc/linux-x86/ccache/ccache -M 50
+export USE_CCACHE=0
+#ccache -M 50G
+./prebuilts/misc/linux-x86/ccache/ccache -M 50
 
 breakfast ${DEVICE}
 time make $jobcount bacon
 if [ $? -eq 0 ]; then
     cd $OUT
     if [ "$ROM" = "deso" ]; then
-        ROM_ZIP="$(ls Desolation*${DATE}*.zip | awk '{print $1}')";
+        ROM_ZIP="$(ls Desolation*${DATE}*.zip | awk '{print $1}')"
     elif [ "$ROM" = "*fork*" ]; then
-        ROM_ZIP="$(ls lineagefork*${DEVICE}*.zip | awk '{print $1}')";
+        ROM_ZIP="$(ls lineagefork*${DEVICE}*.zip | awk '{print $1}')"
     elif [ "$ROM" = "*aicp*" ]; then
-        ROM_ZIP="$(ls aicp*${DEVICE}*.zip | awk '{print $1}')";
+        ROM_ZIP="$(ls aicp*${DEVICE}*.zip | awk '{print $1}')"
     else
-        ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')";
+        ROM_ZIP="$(ls *${DATE}*.zip | awk '{print $1}')"
     fi
     rm out/target/product/${DEVICE}/*zip
     DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} -p 0B2HoiwlM3QDxOGc0SE9jLUYwdTA --share | tail -1 | awk '{print $9}')"

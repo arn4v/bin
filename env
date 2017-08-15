@@ -25,6 +25,7 @@ export USE_CCACHE=1
 PATH=~/bin:$PATH
 source ${HOME}/.afhcreds
 alias sync='time repo sync -f -c --no-clone-bundle -j32 --no-tags'
+export TZ=Asia/Kolkata
 
 upinfo ()
 {
@@ -93,4 +94,4 @@ alias gcamd='git commit --amend'
 alias gchp='git cherry-pick'
 
 # AFH
-alias afh='ncftpput -u $afhusername -p $afhusername uploads.androidfilehost.com . $1'
+alias afh='ncftpput -u $afhusername -p $afhpassword uploads.androidfilehost.com . $1'

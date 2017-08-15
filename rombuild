@@ -2,18 +2,9 @@
 source ${HOME}/bin/env
 DATE=`date +%Y`
 jobcount="-j$(grep -c ^processor /proc/cpuinfo)"
-
-if [ ! $ROMBUILD = 1 ]; then
-    rm ${HOME}/.rombuild
-fi
-
-if [ ! -f ${HOME}/.rombuild ]; then
-    ROM="$1"
-    DEVICE="$2"
-    COMMAND="$3"
-else
-    source ${HOME}/.rombuild
-fi
+ROM="$1"
+DEVICE="$2"
+COMMAND="$3"
 
 cd ${HOME}/${ROM}
 source build/envsetup.sh

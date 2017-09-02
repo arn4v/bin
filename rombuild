@@ -7,6 +7,10 @@ DEVICE="$2"
 COMMAND="$3"
 
 cd ${HOME}/${ROM}
+if [ $ROM = rr ]; then
+export WITH_ROOT_METHOD=rootless
+export RR_BUILDTYPE=Unofficial
+fi
 source build/envsetup.sh
 
 if [[ "$COMMAND" = "clean" ]]; then
@@ -55,7 +59,7 @@ if [ $? -eq 0 ]; then
         FOLDER_ID="0B2HoiwlM3QDxVEo0LWNuZ0paYWc"
     elif [[ "$ROM" = "fork" ]]; then
         ROM_ZIP="$(ls *fork*${DEVICE}*.zip | awk '{print $1}')"
-        FOLDER_ID="$0B2HoiwlM3QDxXzV6OTFfb0szZXc"
+        FOLDER_ID="0B2HoiwlM3QDxXzV6OTFfb0szZXc"
     elif [[ "$ROM" = "aicp" ]]; then
         ROM_ZIP="$(ls aicp_${DEVICE}*UNOFFICIAL*.zip | awk '{print $1}')"
         FOLDER_ID="0B2HoiwlM3QDxVFk4UUd2bG56Ums"
@@ -64,11 +68,11 @@ if [ $? -eq 0 ]; then
         FOLDER_ID="0B2HoiwlM3QDxOGc0SE9jLUYwdTA"
     fi
     rm out/target/product/${DEVICE}/*.zip*
-#    FILE_ID="$(gdrive list | grep ${ROM} | awk '{print $2}'| tail -1}"
-#    DOWNLOAD_URL="$(drive share -i ${FILE_ID)"
     DOWNLOAD_URL="$(drive upload -f ${ROM_ZIP} -p ${FOLDER_ID} --share | tail -1 | awk '{print $9}')"
-    TRANSFER_URL="$(curl --upload-file ./${ROM_ZIP} https://transfer.sh/${ROM_ZIP}"
-    clear
-    echo "FILE: $ROM_ZIP can be downloaded at ${DOWNLOAD_URL} or ${TRANSFER_URL}"
-    echo "[$ROM_ZIP](${DOWNLOAD_URL})\n [Transfer.sh Mirror](${TRANSFER_URL}"" >> ~/velvet/builderbot/romlink.txt
+    if [[ -z $ROMBUILD_BOT ]]; then
+        clear
+        echo "FILE: $ROM_ZIP can be downloaded at ${DOWNLOAD_URL}"
+    else
+        echo "[$ROM_ZIP](${DOWNLOAD_URL})" >> ~/velvet/builderbot/romlink.txt
+    fi
 fi

@@ -24,7 +24,6 @@ nc='\e[0m'
 export USE_CCACHE=1
 PATH=~/bin:$PATH
 source ${HOME}/.afhcreds
-alias sync='time repo sync -f -c --no-clone-bundle -j32 --no-tags'
 export TZ=Asia/Kolkata
 
 upinfo ()
@@ -53,30 +52,6 @@ function afh() {
 ncftpput -u ${afhusername} -p ${afhpassword} uploads.androidfilehost.com . $1
 }
 
-function build() {
-if [ $3 == "sync" ];
-then
-make_arg1=$4
-make_arg2=$5
-else
-make_arg1=$3
-make_arg2=$4
-fi
-sourceroot="${HOME}/"$1""
-cd $sourceroot
-if [ $3 == "sync" ];
-then
-sync && sync
-fi
-source build/envsetup.sh
-breakfast $2
-if [ ! $make_arg1 == "" ] && [ $make_arg2 == "" ];
-then
-time make -j20 $make_arg1;
-fi
-dup $OUT/*"$2"*.zip
-}
-
 function createrepo() {
 curl -X POST -H "Authorization: token "$token"" -d  '{ "name": "'"$2"'"}' "https://api.github.com/orgs/"$1"/repos"
 }
@@ -85,15 +60,20 @@ function forkrmt() {
 git remote add origin $(git remote -v | grep lineagefork | awk '{print $2}' | sed -e 's|git://github.com/|git@github.com:|' | uniq)
 }
 
+function sync() {
+    if [ -d .repo ]; then
+        time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
+    else
+        cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags
+    fi
+}
+
 transfer() { if [ $# -eq 0 ]; then echo -e "No arguments specified. Usage:\necho transfer /tmp/test.md\ncat /tmp/test.md | transfer test.md"; return 1; fi
 tmpfile=$( mktemp -t transferXXX ); if tty -s; then basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g'); curl --progress-bar --upload-file "$1" "https://transfer.sh/$basefile" >> $tmpfile; else curl --progress-bar --upload-file "-" "https://transfer.sh/$1" >> $tmpfile ; fi; cat $tmpfile; rm -f $tmpfile; }
 
 #------------------------------------------////
 # ALIAS:
 #------------------------------------------////
-
-# sync
-alias sync='time repo sync -f -c --no-clone-bundle -j32 --no-tags'
 
 # git
 alias gresh='git reset --hard HEAD^'

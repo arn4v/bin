@@ -1,0 +1,13 @@
+#!/bin/bash
+
+regex='^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?'
+
+if [[ $1 =~ $regex ]]; then
+    dirs=${BASH_REMATCH[5]}
+    trimmed="${dirs:1:${#dirs}-2}"
+    slashes="${trimmed//[^\/]}"
+    count="${#slashes}"
+    wget -q --show-progress -r -np -nH --cut-dirs=${count} -R "index.html*" "$1/"
+else
+    echo "URL not understood."
+fi

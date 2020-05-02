@@ -23,6 +23,10 @@ function sync() {
     fi
 }
 
+function keygen() {
+    ssh-keygen -t rsa -b 4096 -C "arn4v@tutanota.com"
+    cat $HOME/.ssh/id_rsa.pub
+}
 
 #------------------------------------------////
 # ALIAS:

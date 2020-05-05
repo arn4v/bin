@@ -1,0 +1,22 @@
+#!/bin/bash
+# Use it however you want
+
+source $PWD/velvet.ini
+kernel_dir=$PWD
+tc_dir=$PWD/../tcs/
+kernel_id=velvet
+kernel_version=1.0
+date=$(date +'%F' | sed 's/-//g')
+
+# Compile
+function makekernel() {
+}
+
+# Clean
+function clean() {
+    make mrproper && make clean
+}
+
+# AnyKernel Zip
+function zipitup() {
+}

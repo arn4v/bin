@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function mkdircd() {
+    mkdir $1 && cd $1 || exit 1
+}
+
+function createrepo() {
+    curl -X POST -H "Authorization: token "$token"" -d  '{ "name": "'"$2"'"}' "https://api.github.com/orgs/"$1"/repos"
+}
+
+function sync() {
+    if [ -d .repo ]; then
+        time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
+    else
+        cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags
+    fi
+}

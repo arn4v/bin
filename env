@@ -1,32 +1,7 @@
 #!/bin/bash
-#------------------------------------///
-# CUSTOM BASHRC SHIT
-#------------------------------------///
-
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 PATH=~/bin:$PATH
-
-#------------------------------------------////
-# FUNCTIONS:
-#------------------------------------------////
-
-function createrepo() {
-curl -X POST -H "Authorization: token "$token"" -d  '{ "name": "'"$2"'"}' "https://api.github.com/orgs/"$1"/repos"
-}
-
-function sync() {
-    if [ -d .repo ]; then
-        time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
-    else
-        cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags
-    fi
-}
-
-function keygen() {
-    ssh-keygen -t rsa -b 4096 -C "arn4v@tutanota.com"
-    cat $HOME/.ssh/id_rsa.pub
-}
 
 #------------------------------------------////
 # ALIAS:
@@ -64,3 +39,8 @@ git config --global alias.ca 'commit --amend'
 git config --global alias.cn 'commit --no-edit'
 git config --global alias.gerrit 'push gerrit HEAD:refs/for/pie'
 git config --global alias.add-change-id "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i \$1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git rebase --continue; done' -"
+
+# Shell
+alias ..='cd ..'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'

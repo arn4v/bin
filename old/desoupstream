@@ -1,3 +1,0 @@
-#!/bin/bash
-git pull $(git remote -v | grep DesolationROM | awk '{print $2}' | sed -e 's|https://github.com/DesolationROM/|https://android.googlesource.com/platform/|' -e 's|_|/|' | uniq) refs/tags/android-7.1.2_r33
-git push $(git remote -v | grep DesolationROM | awk '{print $2}' | sed -e 's|https://github.com/|git@github.com:|' | uniq) HEAD:n

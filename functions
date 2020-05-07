@@ -1,17 +1,36 @@
 #!/bin/bash
 
-function mkdircd() {
+mkdircd() {
     mkdir $1 && cd $1 || exit 1
 }
 
-function createrepo() {
+createrepo() {
     curl -X POST -H "Authorization: token "$token"" -d  '{ "name": "'"$2"'"}' "https://api.github.com/orgs/"$1"/repos"
 }
 
-function sync() {
+sync() {
     if [ -d .repo ]; then
         time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
     else
         cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags
     fi
+}
+
+keygen() {
+    ssh-keygen -t rsa -b 4096 -C $1
+}
+
+tlpmode() {
+batterystate=$(acpi | sed 's/^.*Discharging/Discharging/; s/Discharging.*/Discharging/')
+
+    if [[ $batterystate = 'Discharging' ]]; then
+      sudo tlp bat
+    else
+      sudo tlp ac
+    fi
+
+}
+
+updategrub() {
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
 }

@@ -1,7 +1,8 @@
 #!/bin/bash
+source ~/scripts/functions
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
-PATH=~/bin:$PATH
+PATH=~/scripts/bin:$PATH
 
 #------------------------------------------////
 # ALIAS:

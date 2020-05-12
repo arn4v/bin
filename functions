@@ -1,4 +1,7 @@
 #!/bin/bash
+#------------------------------------------////
+# FUNCTIONS:
+#------------------------------------------////
 
 mkdircd() {
     mkdir $1 && cd $1 || exit 1
@@ -21,7 +24,7 @@ keygen() {
 }
 
 tlpmode() {
-batterystate=$(acpi | sed 's/^.*Discharging/Discharging/; s/Discharging.*/Discharging/')
+    batterystate=$(acpi | sed 's/^.*Discharging/Discharging/; s/Discharging.*/Discharging/')
 
     if [[ $batterystate = 'Discharging' ]]; then
       sudo tlp bat
@@ -33,4 +36,16 @@ batterystate=$(acpi | sed 's/^.*Discharging/Discharging/; s/Discharging.*/Discha
 
 updategrub() {
     sudo grub-mkconfig -o /boot/grub/grub.cfg
+}
+
+genapplist() {
+    comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
+}
+
+fm() {
+    nautilus .
+}
+
+gapp() {
+    ps aux | grep $1
 }

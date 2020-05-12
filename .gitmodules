@@ -1,0 +1,3 @@
+[submodule "bin/bashtop"]
+	path = bin/bashtop
+	url = https://github.com/aristocratos/bashtop

@@ -23,17 +23,6 @@ keygen() {
     ssh-keygen -t rsa -b 4096 -C $1
 }
 
-tlpmode() {
-    batterystate=$(acpi | sed 's/^.*Discharging/Discharging/; s/Discharging.*/Discharging/')
-
-    if [[ $batterystate = 'Discharging' ]]; then
-      sudo tlp bat
-    else
-      sudo tlp ac
-    fi
-
-}
-
 updategrub() {
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 }

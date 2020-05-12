@@ -49,3 +49,22 @@ fm() {
 gapp() {
     ps aux | grep $1
 }
+
+updatebinsubmodule() {
+    if [ -d $HOME/scripts/bin/$1 ]; then
+        cd $HOME/scripts/bin/$1 && git pull
+        cd $HOME/scripts && git submodule update
+        git add -A; git commit -am "scripts: update ${1}"
+    else
+        echo "Submodule doesn't exist"
+    fi
+}
+
+updatesubmodule() {
+    if [ -d $pwd/.git ]; then
+        cd $1 && git pull
+        .. && git submodule update
+    else
+        echo "Submodule doesn't exist"
+    fi
+}

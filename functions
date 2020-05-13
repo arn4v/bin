@@ -15,7 +15,7 @@ sync() {
     if [ -d .repo ]; then
         time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
     else
-        cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags
+        cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
     fi
 }
 

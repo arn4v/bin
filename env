@@ -48,5 +48,6 @@ alias ..='cd ..'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias bashtop='bash $HOME/scripts/bin/bashtop/bashtop'
+alias fm='nautilus $pwd'
 
 # Other

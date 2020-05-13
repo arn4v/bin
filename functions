@@ -13,9 +13,9 @@ createrepo() {
 
 sync() {
     if [ -d .repo ]; then
-        time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
+        time repo sync -c --no-clone-bundle --no-tags -q $@
     else
-        cd ${HOME}/$1; time repo sync -f -c --no-clone-bundle -j32 --no-tags $@
+        cd ${HOME}/$1; time repo sync -c --no-clone-bundle --no-tags -q $@
     fi
 }
 

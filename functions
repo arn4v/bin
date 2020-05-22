@@ -27,7 +27,7 @@ updategrub() {
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
-genapplist() {
+genaptpkglist() {
     comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
 }
 
@@ -51,5 +51,27 @@ updatesubmodule() {
         .. && git submodule update
     else
         echo "Submodule doesn't exist"
+    fi
+}
+
+rewin() {
+    sudo /usr/sbin/grub-reboot "Windows Boot Manager (on /dev/nvme0n1p1)"
+    sudo /sbin/reboot
+}
+
+genkeystore() {
+    keytool -genkey -v -keystore $KEYSTORES_PATH/$1.jks -alias $1 -keyalg RSA -keysize 4096 -validity 10000
+}
+
+signapk() {
+    jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $KEYSTORES_PATH/$1.jks $2 $1
+}
+
+# Switch GFX Card
+sgfx() {
+    if [[ $(sudo prime-select query) == "intel" ]]; then
+      sudo prime-select nvidia
+    else
+      sudo prime-select intel
     fi
 }

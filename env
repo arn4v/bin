@@ -6,7 +6,6 @@ export USE_CCACHE=1
 export PATH=$HOME/scripts/bin:${PATH}
 export PATH=$HOME/dev/tcs/tc-build/install/bin:${PATH}
 export TZ="/usr/share/zoneinfo/Asia/Calcutta"
-clear && neofetch
 
 #------------------------------------------////
 # ALIAS:
@@ -49,6 +48,6 @@ alias ..='cd ..'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias bashtop='bash $HOME/scripts/bin/bashtop/bashtop'
-alias fm='nautilus $pwd'
-
+alias fm='nautilus $(pwd)'
+alias sdkman='${ANDROID_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME}'
 # Other

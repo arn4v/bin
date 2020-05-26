@@ -3,8 +3,13 @@
 source ~/scripts/functions
 export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
+
+# Set Paths
+export ANDROID_HOME=$HOME/0projs/android/sdk
+export ANDROID_SDK_PATH=$HOME/0projs/android/sdk
+export KEYSTORES_PATH=$HOME/.keystores
+export PATH=$HOME/.flutter/bin:${PATH}
 export PATH=$HOME/scripts/bin:${PATH}
-export PATH=$HOME/dev/tcs/tc-build/install/bin:${PATH}
 export TZ="/usr/share/zoneinfo/Asia/Calcutta"
 
 #------------------------------------------////
@@ -50,4 +55,5 @@ alias grep='grep --color=auto'
 alias bashtop='bash $HOME/scripts/bin/bashtop/bashtop'
 alias fm='nautilus $(pwd)'
 alias sdkman='${ANDROID_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME}'
+alias repulse='pulseaudio -k && pulseaudio --start'
 # Other

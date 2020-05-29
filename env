@@ -5,10 +5,8 @@ export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 
 # Set Paths
-export ANDROID_HOME=$HOME/0projs/android/sdk
-export ANDROID_SDK_PATH=$HOME/0projs/android/sdk
+export ANDROID_HOME=$HOME/Android/Sdk
 export KEYSTORES_PATH=$HOME/.keystores
-export PATH=$HOME/.flutter/bin:${PATH}
 export PATH=$HOME/scripts/bin:${PATH}
 export TZ="/usr/share/zoneinfo/Asia/Calcutta"
 
@@ -52,8 +50,15 @@ git config --global alias.add-change-id "!EDITOR='sed -i -re s/^pick/e/' sh -c '
 alias ..='cd ..'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-alias bashtop='bash $HOME/scripts/bin/bashtop/bashtop'
-alias fm='nautilus $(pwd)'
+#alias bashtop='bash $HOME/scripts/bin/bashtop/bashtop'
+alias fm='dolphin "$(pwd)"'
 alias sdkman='${ANDROID_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME}'
 alias repulse='pulseaudio -k && pulseaudio --start'
+alias reskde='kquitapp5 plasmashell && kstart5 plasmashell'
+
+# Yay Alias
+alias yayi='yay --noconfirm'
+alias yayu='yay -Syu --noconfirm'
+alais yays='yay -Ss'
+
 # Other

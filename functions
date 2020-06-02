@@ -66,12 +66,3 @@ genkeystore() {
 signapk() {
     jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $KEYSTORES_PATH/$1.jks $2 $1
 }
-
-# Switch GFX Card
-sgfx() {
-    if [[ $(sudo prime-select query) == "intel" ]]; then
-      sudo prime-select nvidia
-    else
-      sudo prime-select intel
-    fi
-}

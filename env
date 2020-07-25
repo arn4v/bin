@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-source ~/scripts/functions
-export CCACHE_EXEC=$(which ccache)
+source $HOME/scripts/functions
+source $HOME/scripts/bin/add2path
+#export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 
 # Set Paths
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 export ANDROID_HOME=$HOME/Android/Sdk
 export KEYSTORES_PATH=$HOME/.keystores
 export PATH=$HOME/scripts/bin:${PATH}
@@ -46,19 +48,37 @@ git config --global alias.ca 'commit --amend'
 git config --global alias.cn 'commit --no-edit'
 git config --global alias.add-change-id "!EDITOR='sed -i -re s/^pick/e/' sh -c 'git rebase -i \$1 && while test -f .git/rebase-merge/interactive; do git commit --amend --no-edit && git rebase --continue; done' -"
 
-# Shell
 alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
 alias ls='ls --color=auto'
+alias cp='cp -iv $*'
+alias mv='mv -iv $*'
 alias grep='grep --color=auto'
-#alias bashtop='bash $HOME/scripts/bin/bashtop/bashtop'
-alias fm='dolphin "$(pwd)"'
 alias sdkman='${ANDROID_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME}'
-alias repulse='pulseaudio -k && pulseaudio --start'
-alias reskde='kquitapp5 plasmashell && kstart5 plasmashell'
+alias aria2c='aria2c --file-allocation=none'
+alias vi='nvim $*'
+alias vim='nvim $*'
+alias ve='python3 -m virtualenv virtualenv'
+alias vea='source venv/bin/activate'
+alias ved='deactivate'
+alias cddp='cd ~/projs/'
+alias cddu='cd $HOME'
+alias renv='source ~/scripts/env'
+alias oenv='vim ~/scripts/env'
+alias ofns='vim ~/scripts/functions'
+alias ovrc='vim ~/.vimrc'
+alias onvrc='vim ~/.config/nvim/init.vim'
+alias nano='vim $*'
+# Tmux
+alias tt='vim ~/.config/tmux/.tmux.config'
+alias tn='tmux -u new'
+alias ta='tmux -u attach'
 
-# Yay Alias
-alias yayi='yay --noconfirm'
-alias yayu='yay -Syu --noconfirm'
-alais yays='yay -Ss'
+# Rclone
+alias rclr='rclone listremotes'
+alias rccp='rclone copy -P $1 $2'
+alias rcls='rclone lsf $1'
 
-# Other
+# Efforts are being made
+# alias code='vim'

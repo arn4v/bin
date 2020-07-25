@@ -8,14 +8,15 @@ mkdircd() {
 }
 
 createrepo() {
-    curl -X POST -H "Authorization: token "$token"" -d  '{ "name": "'"$2"'"}' "https://api.github.com/orgs/"$1"/repos"
+    curl -X POST -H "Authorization: token "$token"" -d '{ "name": "'"$2"'"}' "https://api.github.com/orgs/"$1"/repos"
 }
 
 sync() {
     if [ -d .repo ]; then
         time repo sync -c --no-clone-bundle --no-tags -q $@
     else
-        cd ${HOME}/$1; time repo sync -c --no-clone-bundle --no-tags -q $@
+        cd ${HOME}/$1
+        time repo sync -c --no-clone-bundle --no-tags -q $@
     fi
 }
 
@@ -39,7 +40,8 @@ updatebinsubmodule() {
     if [ -d $HOME/scripts/bin/$1 ]; then
         cd $HOME/scripts/bin/$1 && git pull
         cd $HOME/scripts && git submodule update
-        git add -A; git commit -am "scripts: update ${1}"
+        git add -A
+        git commit -am "scripts: update ${1}"
     else
         echo "Submodule doesn't exist"
     fi
@@ -65,4 +67,15 @@ genkeystore() {
 
 signapk() {
     jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore $KEYSTORES_PATH/$1.jks $2 $1
+}
+
+cdp() {
+base_dir="$HOME/projs"
+if [[ -n "$1" && -n "$2" ]]; then
+    cd $base_dir/$1/$2    
+elif [[ -n $1 && -z $2 ]]; then
+    cd $base_dir/$1
+else
+    cd $base_dir
+fi
 }

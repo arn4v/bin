@@ -1,0 +1,35 @@
+#!/bin/env python3
+# Setup new project script
+import os, sys
+
+root_dir = os.path.join(os.environ["HOME"], "projs")
+
+
+def create_project(lang: str, proj: str):
+    proj_dir = os.path.join(root_dir, lang, proj)
+    if not os.path.isdir(proj_dir):
+        os.mkdir(proj_dir)
+        os.chdir(proj_dir)
+    else:
+        sys.exit("Project already exists, exiting...")
+    if lang == "js":
+        os.system("yarn init -y")
+        with open(".gitignore", "w") as gitignore:
+            gitignore.write("node_modules")
+    elif lang == "py":
+        os.system(
+            "python3 -m virtualenv virtualenv"
+        )
+
+
+if len(sys.argv) <= 3:
+    if sys.argv[1] not in os.listdir(root_dir):
+        sys.exit(f"{sys.argv[1]} is not a valid directory in {root_dir}")
+    else:
+        lang_dir = sys.argv[1]
+        proj_dir = sys.argv[2]
+
+    create_project(lang_dir, proj_dir)
+    os.system(f"zsh -c cdp {lang_dir} {proj_dir}")
+else:
+    sys.exit("Too many arguments...\n Usage: setproj <language> <project_dir>")

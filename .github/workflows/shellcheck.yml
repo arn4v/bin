@@ -1,0 +1,11 @@
+on: [push, pull_request]
+name: ShellCheck scripts
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run shellcheck.
+        uses: ludeeus/action-shellcheck@master
+        run: while read -r script; do shellcheck --exclude=SC1090,SC1091 $script; done < files

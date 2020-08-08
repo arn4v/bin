@@ -5,9 +5,9 @@ base_dir="$HOME/.bin"
 for folder in $(ls $base_dir); do
     if [[ -d "$base_dir/$folder" ]]; then
         if [[ -d "$base_dir/$folder/bin" ]]; then
-            export PATH=$PATH:$base_dir/$folder/bin
+            export PATH="$base_dir/$folder/bin:$PATH"
         else
-            export PATH=$PATH:$base_dir/$folder
+            export PATH="$base_dir/$folder:$PATH"
         fi
     fi
 done

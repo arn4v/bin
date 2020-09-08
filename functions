@@ -70,14 +70,15 @@ signapk() {
 }
 
 cdp() {
-    base_dir="$HOME/projs"
-    if [[ -n "$1" && -n "$2" ]]; then
-        cd $base_dir/$1/$2    
-    elif [[ -n $1 && -z $2 ]]; then
-        cd $base_dir/$1
-    else
-        cd $base_dir
+    base_dir="${HOME}/projs"
+    directory="${base_dir}/$1/$2"
+
+    if [[ "$1" == 'w' ]]; then
+        base_dir="${HOME}/win/d/projs"
+        directory="${base_dir}/$2/$3"
     fi
+
+    cd $directory
 }
 
 createuser() {

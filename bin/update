@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+current_dir=$(pwd)
+for folder in $(ls "$HOME/.bin/"); do
+  if [[ -d "$HOME/$folder/.git/" ]]; then
+    cd "$HOME/$folder"
+    git pull
+    cd $current_dir
+  fi
+done

@@ -4,6 +4,7 @@ source $HOME/scripts/functions
 source $HOME/scripts/bin/add2path
 #export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
+export EDITOR=nvim
 
 # Set Paths
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
@@ -11,6 +12,7 @@ export ANDROID_HOME=$HOME/Android/Sdk
 export KEYSTORES_PATH=$HOME/.keystores
 export PATH=$HOME/scripts/bin:${PATH}
 export TZ="/usr/share/zoneinfo/Asia/Calcutta"
+export XDG_CONFIG_DIR="$HOME/.dotfiles"
 
 #------------------------------------------////
 # ALIAS:
@@ -51,7 +53,7 @@ git config --global alias.add-change-id "!EDITOR='sed -i -re s/^pick/e/' sh -c '
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias ls='ls --color=auto'
+alias ls='ls --color=auto --group-directories-first'
 alias cp='cp -iv $*'
 alias mv='mv -iv $*'
 alias grep='grep --color=auto'
@@ -59,7 +61,7 @@ alias sdkman='${ANDROID_HOME}/tools/bin/sdkmanager --sdk_root=${ANDROID_HOME}'
 alias aria2c='aria2c --file-allocation=none'
 alias vi='nvim $*'
 alias vim='nvim $*'
-alias ve='python3 -m virtualenv virtualenv'
+alias ve='python3 -m virtualenv venv'
 alias vea='source venv/bin/activate'
 alias ved='deactivate'
 alias cddu='cd $HOME'
@@ -69,9 +71,14 @@ alias ofns='vim ~/scripts/functions'
 alias nano='vim $*'
 
 # Tmux
-alias tt='vim ~/.config/tmux/.tmux.config'
-alias tn='tmux -u new'
+alias tt='vim ~/.dotfiles/tmux/tmux.config'
+alias tn='tmux -2 -u new'
 alias ta='tmux -u attach'
+alias td='tmux detach'
+alias tns='tmux -2 -u new -s $1'
+alias tas='tmux -2 -u attach -t $1'
+alias tls='tmux ls' 
+alias tks='tmux kill-session -t $1'
 
 # Rclone
 alias rclr='rclone listremotes'
@@ -80,3 +87,5 @@ alias rcls='rclone lsf $1'
 
 # Efforts are being made
 # alias code='vim'
+
+alias make='make -j$(nproc) $*'

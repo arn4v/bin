@@ -1,0 +1,5 @@
+ZH_THEME="amuse"
+#ZSH_THEME="bira"
+#ZSH_THEME="maran"
+
+plugins=(zsh-autosuggestions)

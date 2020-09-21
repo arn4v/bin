@@ -1,2 +1,0 @@
-# TMUX
-alias tcbp='tmux show-buffer | clip.exe'

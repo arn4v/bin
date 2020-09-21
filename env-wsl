@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export CHROME_EXECUTABLE="/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe"
+
+alias tcbp='tmux show-buffer | clip.exe'

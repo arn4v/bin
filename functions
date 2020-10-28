@@ -84,3 +84,11 @@ cdp() {
 createuser() {
     sudo useradd -m $1 && sudo usermod -aG sudo $1
 }
+
+mkfile() { 
+    mkdir -p $(dirname $1) && touch $1
+}
+
+nodeignore() {
+    wget https://www.toptal.com/developers/gitignore/api/node -O .gitignore
+}

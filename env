@@ -72,13 +72,14 @@ alias nano='vim $*'
 
 # Tmux
 alias tt='vim ~/.dotfiles/tmux/tmux.config'
-alias tn='tmux -2 -u new'
-alias ta='tmux -u attach'
-alias td='tmux detach'
-alias tns='tmux -2 -u new -s $1'
-alias tas='tmux -2 -u attach -t $1'
-alias tls='tmux ls' 
-alias tks='tmux kill-session -t $1'
+alias tmn='tmux -2 -u new'
+alias tma='tmux -u attach'
+alias tmd='tmux detach'
+alias tmns='tmux -2 -u new -s $1'
+alias tmas='tmux -2 -u attach -t $1'
+alias tmls='tmux ls' 
+alias tmks='tmux kill-session -t $1'
+alias tmsb='tmux show-buffer'
 
 # Rclone
 alias rclr='rclone listremotes'
@@ -89,3 +90,7 @@ alias rcls='rclone lsf $1'
 # alias code='vim'
 
 alias make='make -j$(nproc) $*'
+# alias create-next-app='create-next-app --use-npm $*'
+# alias create-react-app='create-react-app --use-npm $*'
+
+alias mux='tmuxinator'

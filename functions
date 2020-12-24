@@ -92,3 +92,13 @@ mkfile() {
 nodeignore() {
     wget https://www.toptal.com/developers/gitignore/api/node -O .gitignore
 }
+
+nestgmod() {
+    nest g mo $1
+    nest g co $1
+    nest g s $1
+    cd $1
+    rm *spec*
+    for f in $(ls);do mv $f $(echo $f | cut -c`expr length $f + 1`-); done
+    cd ..
+}

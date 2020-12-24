@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+toReplace=$1
+toReplaceWith=$1
+pattern="s/${1}/${2}/g"
+
+for f in $(ls .);
+do
+    renamedFile=$(echo $f | sed $pattern) 
+    mv $f $renamedFile && echo "${f} renamed to ${renamedFile}"
+done

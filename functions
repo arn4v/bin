@@ -102,3 +102,7 @@ nestgmod() {
     for f in $(ls);do mv $f $(echo $f | cut -c`expr length $f + 1`-); done
     cd ..
 }
+
+kp() {
+    sudo kill -9 `sudo lsof -t -i:$1`
+}

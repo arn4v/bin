@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-source $HOME/scripts/functions
-source $HOME/scripts/bin/add2path
+source $HOME/.scripts/functions
+source $HOME/.scripts/bin/add2path
 #export CCACHE_EXEC=$(which ccache)
 export USE_CCACHE=1
 export EDITOR=nvim
@@ -11,6 +11,7 @@ export ANDROID_SDK_ROOT=$HOME/Android/Sdk
 export ANDROID_HOME=$HOME/Android/Sdk
 export KEYSTORES_PATH=$HOME/.keystores
 export PATH=$HOME/scripts/bin:${PATH}
+export PATH=$HOME/.local/bin:${PATH}
 export TZ="/usr/share/zoneinfo/Asia/Calcutta"
 export NVIM_CONFIG_DIR="$HOME/.dotfiles/nvim"
 
@@ -65,9 +66,9 @@ alias ve='python3 -m virtualenv venv'
 alias vea='source venv/bin/activate'
 alias ved='deactivate'
 alias cddu='cd $HOME'
-alias renv='source ~/scripts/env'
-alias oenv='vim ~/scripts/env'
-alias ofns='vim ~/scripts/functions'
+alias renv='source ~/.scripts/env'
+alias oenv='vim ~/.scripts/env'
+alias ofns='vim ~/.scripts/functions'
 alias nano='vim $*'
 
 # Tmux
@@ -94,3 +95,4 @@ alias make='make -j$(nproc) $*'
 # alias create-react-app='create-react-app --use-npm $*'
 
 alias mux='tmuxinator'
+alias tcbp='tmux show-buffer | clip.exe'
